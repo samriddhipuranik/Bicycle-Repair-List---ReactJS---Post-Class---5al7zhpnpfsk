@@ -5,7 +5,7 @@ import {
   render,
   fireEvent,
   cleanup,
-  getAllByText,
+  getByText,
   waitFor,
   act,
 } from "@testing-library/react";
@@ -114,7 +114,7 @@ function renderWithRedux(
 
 describe("Rendering Test. ", () => {
   it("Heading and labels Exist", () => {
-    const { getAllByText } = renderWithRedux(<App />);
+    const { getByText } = renderWithRedux(<App />);
     const labels = document.getElementsByTagName("label");
     expect(String(labels[0].innerHTML)).toMatch("Owner");
     expect(String(labels[1].innerHTML)).toMatch("Model");
@@ -124,7 +124,7 @@ describe("Rendering Test. ", () => {
 
 describe("Adding repair", () => {
   it("Adding a repair ", () => {
-    const { getAllByText } = renderWithRedux(<App />);
+    const { getByText } = renderWithRedux(<App />);
 
     const ownerTextBox = document.getElementById("owner-text-box");
     fireEvent.change(ownerTextBox, { target: { value: "Chirag" } });
@@ -135,7 +135,7 @@ describe("Adding repair", () => {
     const descTextBox = document.getElementById("description-text-box");
     fireEvent.change(descTextBox, { target: { value: "Loose Breaks" } });
 
-    fireEvent.click(getAllByText("+"));
+    fireEvent.click(getByText("+"));
     const repairItems = document.getElementsByClassName("repair-item");
 
     expect(repairItems.length).toEqual(4);
@@ -153,7 +153,7 @@ describe("Adding repair", () => {
 
 describe("Testing Update, Delete, Done/Undo button functionality", () => {
   it("Updating a repair ", () => {
-    const { getAllByText } = renderWithRedux(<App />);
+    const { getByText } = renderWithRedux(<App />);
 
     fireEvent.click(document.getElementsByTagName("button")[1]);
 
@@ -188,7 +188,7 @@ describe("Testing Update, Delete, Done/Undo button functionality", () => {
     expect(document.getElementById("description-text-box").value).toEqual("");
   });
   it("Resolving a repair ", () => {
-    const { getAllByText } = renderWithRedux(<App />);
+    const { getByText } = renderWithRedux(<App />);
 
     fireEvent.click(document.getElementsByTagName("button")[3]);
     const repairItems = document.getElementsByClassName("repair-item");
@@ -200,7 +200,7 @@ describe("Testing Update, Delete, Done/Undo button functionality", () => {
     expect(repairItems[0].innerHTML).toMatch("Delete");
   });
   it("Deleting a repair ", () => {
-    const { getAllByText } = renderWithRedux(<App />);
+    const { getByText } = renderWithRedux(<App />);
 
     fireEvent.click(document.getElementsByTagName("button")[2]);
     const repairItems = document.getElementsByClassName("repair-item");
@@ -209,7 +209,7 @@ describe("Testing Update, Delete, Done/Undo button functionality", () => {
   });
 
   it("Undoing the resolved action a repair ", () => {
-    const { getAllByText } = renderWithRedux(<App />);
+    const { getByText } = renderWithRedux(<App />);
 
     act(() => {
       fireEvent.click(document.getElementsByTagName("button")[3]);
@@ -227,7 +227,7 @@ describe("Testing Update, Delete, Done/Undo button functionality", () => {
     });
   });
   it("Update button click -> Fill input Boxes -> Done button Click -> should clear input boxes", () => {
-    const { getAllByText } = renderWithRedux(<App />);
+    const { getByText } = renderWithRedux(<App />);
     act(() => {
       fireEvent.click(document.getElementsByTagName("button")[1]);
       fireEvent.click(document.getElementsByTagName("button")[3]);
